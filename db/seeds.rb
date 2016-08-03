@@ -1,7 +1,6 @@
-require 'random_data'
+include RandomData
 
 50.times do
-
   Post.create!(
     title: RandomData.random_sentence,
     body: RandomData.random_paragraph
@@ -9,12 +8,18 @@ require 'random_data'
 end
 posts = Post.all
 
-#Create comments
-
 100.times do
   Comment.create!(
     post: posts.sample,
     body: RandomData.random_paragraph
+  )
+end
+
+100.times do
+  Question.create!(
+    title: RandomData.random_sentence,
+    body: RandomData.random_paragraph,
+    resolved: false
   )
 end
 
