@@ -10,7 +10,7 @@
     </ul>
   </div>
   <div class="col-md-8">
-    <%= form_for @sponsored_post do |f| %>
+    <%= form_for [@topic, @sponsored_post] do |f| %>
       <div class="form-group">
         <%= f.label :title %>
         <%= f.text_field :title, class: 'form-control', placeholder: "Enter Sponsored Post Title" %>
@@ -21,8 +21,6 @@
       </div>
       <div class="form-group">
         <%= f.label :price %>
-          <%= f.text_field :price %>
-        <% end %>
       </div>
       <%= f.submit "Save", class: 'btn btn-success' %>
     <% end %>

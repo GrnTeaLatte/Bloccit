@@ -1,4 +1,4 @@
-class SponsoredPostController < ApplicationController
+class SponsoredPostsController < ApplicationController
 
   def show
     @sponsored_post = SponsoredPost.find(params[:id])
@@ -15,7 +15,7 @@ class SponsoredPostController < ApplicationController
     @sponsored_post.body = params[:sponsored_post][:body]
     @sponsored_post.price= params[:sponsored_post][:price]
     @topic = Topic.find(params[:topic_id])
-    @post.topic = @topic
+    @sponsored_post.topic = @topic
 
     if @sponsored_post.save
       flash[:notice] = "sponsored post was saved successfully."

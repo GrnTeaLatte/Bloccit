@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe SponsoredPostController, type: :controller do
+RSpec.describe SponsoredPostsController, type: :controller do
 
-  let(:my_topic) { SponsoredPost.create!(title:  RandomData.random_sentence, body: RandomData.random_paragraph, price: RandomData.random_number) }
-  let(:my_sponsored_post) { my_topic.sponsored_post.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, price: RandomData.random_number) }
+  let(:my_topic) { Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph) }
+  let(:my_sponsored_post) { my_topic.sponsored_posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, price: RandomData.random_number) }
 
 
   describe "GET show" do
@@ -42,16 +42,16 @@ RSpec.describe SponsoredPostController, type: :controller do
 
   describe "POST create" do
     it "increases the number of sponsored posts by 1" do
-      expect{sponsored_post :create, topic_id: my_topic.id, sponsored_post: {title: RandomData.random_sentence, body: RandomData.random_paragraph, price: RandomData.random_number}}.to change(SponsoredPost,:count).by(1)
+      expect{post :create, topic_id: my_topic.id, sponsored_post: {title: RandomData.random_sentence, body: RandomData.random_paragraph, price: RandomData.random_number}}.to change(SponsoredPost,:count).by(1)
     end
 
     it "assigns new sponsored post to @sponsored_post" do
-      sponsored_post :create, topic_id: my_topic.id, post: {title: RandomData.random_sentence, body: RandomData.random_paragraph, price: RandomData.random_number}
+      post :create, topic_id: my_topic.id, sponsored_post: {title: RandomData.random_sentence, body: RandomData.random_paragraph, price: RandomData.random_number}
       expect(assigns(:sponsored_post)).to eq SponsoredPost.last
     end
 
     it "redirects to the new sponsored post" do
-      sponsored_post :create, topic_id: my_topic.id, sponsored_post: {title: RandomData.random_sentence, body: RandomData.random_paragraph, price: RandomData.random_number}
+      post :create, topic_id: my_topic.id, sponsored_post: {title: RandomData.random_sentence, body: RandomData.random_paragraph, price: RandomData.random_number}
       expect(response).to redirect_to [my_topic,SponsoredPost.last]
     end
   end

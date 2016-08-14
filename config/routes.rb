@@ -5,7 +5,9 @@ Rails.application.routes.draw do
 
   get 'rails/SponsoredPosts'
 
+
   resources :topics do
+    resources :posts, except: [:index]
     resources :sponsored_posts, except: [:index]
   end
 
