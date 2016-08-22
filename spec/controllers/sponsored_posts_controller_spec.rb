@@ -56,7 +56,7 @@ RSpec.describe SponsoredPostsController, type: :controller do
     end
   end
 
-    describe "GET edit" do
+  describe "GET edit" do
     it "returns http success" do
       get :edit, topic_id: my_topic.id, id: my_sponsored_post.id
       expect(response).to have_http_status(:success)
@@ -75,6 +75,31 @@ RSpec.describe SponsoredPostsController, type: :controller do
       expect(sponsored_post_instance.title).to eq my_sponsored_post.title
       expect(sponsored_post_instance.body).to eq my_sponsored_post.body
       expect(sponsored_post_instance.price).to eq my_sponsored_post.price
+    end
+  end
+
+  describe "PUT update" do
+    it "updates post with expected attributes" do
+      new_title = RandomData.random_sentence
+      new_body = RandomData.random_paragraph
+      new_price = RandomData.random_number
+
+      put :update, topic_id: my_topic.id, id: my_sponsored_post.id, sponsored_post: {title: new_title, body: new_body, price: new_price}
+
+      updated_post = assigns(:sponsored_post)
+      expect(updated_post.id).to eq my_sponsored_post.id
+      expect(updated_post.title).to eq new_title
+      expect(updated_post.body).to eq new_body
+      expect(updated_post.price).to eq new_price
+    end
+
+    it "redirects to the updated post" do
+      new_title = RandomData.random_sentence
+      new_body = RandomData.random_paragraph
+      new_price = RandomData.random_number
+
+      put :update, topic_id: my_topic.id, id: my_sponsored_post.id, sponsored_post: {title: new_title, body: new_body, price: new_price}
+      expect(response).to redirect_to [my_topic, my_sponsored_post]
     end
   end
 end
