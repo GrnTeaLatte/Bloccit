@@ -79,7 +79,7 @@ RSpec.describe SponsoredPostsController, type: :controller do
   end
 
   describe "PUT update" do
-    it "updates post with expected attributes" do
+    it "updates sponsored post with expected attributes" do
       new_title = RandomData.random_sentence
       new_body = RandomData.random_paragraph
       new_price = RandomData.random_number
@@ -87,13 +87,13 @@ RSpec.describe SponsoredPostsController, type: :controller do
       put :update, topic_id: my_topic.id, id: my_sponsored_post.id, sponsored_post: {title: new_title, body: new_body, price: new_price}
 
       updated_post = assigns(:sponsored_post)
-      expect(updated_post.id).to eq my_sponsored_post.id
-      expect(updated_post.title).to eq new_title
-      expect(updated_post.body).to eq new_body
-      expect(updated_post.price).to eq new_price
+      my_sponsored_post.reload
+      expect(my_sponsored_post.title).to eq new_title
+      expect(my_sponsored_post.body).to eq new_body
+      expect(my_sponsored_post.price).to eq new_price
     end
 
-    it "redirects to the updated post" do
+    it "redirects to the updated sponsored post" do
       new_title = RandomData.random_sentence
       new_body = RandomData.random_paragraph
       new_price = RandomData.random_number

@@ -32,6 +32,7 @@ class SponsoredPostsController < ApplicationController
 
   def update
     @sponsored_post = SponsoredPost.find(params[:id])
+    @topic = Topic.find(params[:topic_id])
 
     @sponsored_post.title = params[:sponsored_post][:title]
     @sponsored_post.body = params[:sponsored_post][:body]
@@ -39,7 +40,7 @@ class SponsoredPostsController < ApplicationController
 
     if @sponsored_post.save
        flash[:notice] = "Sponsored Post was updated successfully."
-      redirect_to [@topic, @sponsored_post]
+       redirect_to [@topic, @sponsored_post]
     else
       flash.now[:alert] = "Error saving Sponsored Post. Please try again."
       render :edit
