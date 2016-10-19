@@ -5,16 +5,25 @@ class CommentsController < ApplicationController
 
 
   def create
-    @post = Post.find(params[:post_id])
-    comment = @post.comments.new(comment_params)
-    comment.user = current_user
+    # change next line to lookup post or topic HINT: you can use params[:topic_id]
 
-    if comment.save
+    if params[:post_id]
+      @commentable = Post.find(params[:post_id])
+    else
+      @commentable = Topic.find(params[:topic_id])
+    end
+
+    @comment = @commentable.comments.new(comment_params)
+    @comment = @commentable.user = current_user
+
+    if @comment.save
       flash[:notice] = "Comment saved successfully."
-      redirect_to [@post.topic, @post]
+      # if this is a topic, does topic.topic make sense?
+      redirect_to [@commentable.topic, @post]
+      # redirect to the topic
     else
       flash[:alert] = "Comment failed to save."
-      redirect_to [@post.topic, @post]
+      redirect_to [@commentable.topic, @post]
     end
   end
 
